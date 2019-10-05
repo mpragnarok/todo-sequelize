@@ -1,1 +1,21 @@
-<h1>index</h1>
+{{>new}}
+<ul>
+  {{#each todos}}
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-auto mr-auto">
+        <form action="/todos/{{this.id}}/?_method=DELETE" method="POST" style="display: inline;">
+          <input type="checkbox" name="checkbox" value="{{this.id}}" onchange="this.form.submit()"
+            style="vertical-align: middle;" />
+          <h4 style=" display: inline;vertical-align: middle;" {{#if this.done}} class="task-completed text-secondary"
+            {{/if}}>{{{this.name}}}</h4>
+        </form>
+      </div>
+      <div class="col-auto">
+        <a href="/todos/{{this.id}}" class="btn btn-secondary">detail</a>
+        <a href="/todos/{{this.id}}/edit" class="btn btn-success">edit</a>
+      </div>
+    </div>
+  </li>
+  {{/each}}
+</ul>

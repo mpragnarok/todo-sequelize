@@ -94,9 +94,11 @@ router.post('/register', async (req, res) => {
 // logout
 router.get('/logout', async (req, res) => {
   try {
-    res.send('logout')
+    req.logout()
+    req.flash('success_msg', 'Logout successfully')
+    res.redirect('/users/login')
   } catch (e) {
-    res.status(500).send(e)
+    res.status(500).send()
   }
 })
 

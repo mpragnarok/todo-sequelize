@@ -45,7 +45,7 @@ app.use(flash())
 require('../config/passport')(passport)
 app.use((req, res, next) => {
   res.locals.user = req.user
-
+  res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
   next()
@@ -55,6 +55,7 @@ app.use((req, res, next) => {
 app.use(express.static('public'))
 
 // route setting
+app.use('/todos', require('./routers/todo'))
 app.use('/', require('./routers/home'))
 app.use('/users', require('./routers/user'))
 // setup listening on Express server

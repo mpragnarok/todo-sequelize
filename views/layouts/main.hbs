@@ -33,12 +33,12 @@
       <div class="btn-group float-right">
 
         <div class="button-group">
-          <a href="/records/add" class="btn btn-outline-success mr-2">Add transaction</a>
-          <a href="/users/login" class="btn btn-outline-dark">Login</a>
-
-
+          {{#if isAuthenticated}}
+          <a href="/users/logout" class="btn btn-outline-dark">Logout</a>
+          {{else}}
+          <a href="/users/login" class="btn btn-outline-dark">login</a>
+          {{/if}}
         </div>
-
     </nav>
   </header>
   <div class="container mt-5 py-5">
