@@ -58,6 +58,7 @@ app.use(express.static('public'))
 app.use('/todos', require('./routers/todo'))
 app.use('/', require('./routers/home'))
 app.use('/users', require('./routers/user'))
+
 // setup listening on Express server
 app.listen(port, () => {
   console.log(`Express is listening on localhost ${port}`)
