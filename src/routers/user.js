@@ -1,23 +1,28 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 const db = require('../../models')
 const User = db.User
+
 
 // show login page
 router.get('/login', async (req, res) => {
   try {
-    res.render('login')
+    res.render('login', { message: req.flash('error') })
   } catch (e) {
     res.status(500).send(e)
   }
 })
 
 // login authentication
-router.post('/login', async (req, res) => {
-
+router.post('/login', async (req, res, next) => {
   try {
-
-    res.render('login')
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/users/login',
+      badRequestMessage: 'The email does not match any account',
+      failureFlash: true
+    })(req, res, next)
   } catch (e) {
     res.status(400).send(e)
   }

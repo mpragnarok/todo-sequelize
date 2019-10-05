@@ -11,8 +11,6 @@ const hbs = exphbs.create({
   defaultLayout: 'main'
 })
 
-
-
 // express-session and passport
 const session = require('express-session')
 const passport = require('passport')
@@ -34,14 +32,24 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-// setup passport
 
+
+// setup passport
+app.use(passport.initialize())
+app.use(passport.session())
 
 // setup connect-flash
 app.use(flash())
 
-// import passport config
+// setup passport
+require('../config/passport')(passport)
+app.use((req, res, next) => {
+  res.locals.user = req.user
 
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  next()
+})
 
 // static files
 app.use(express.static('public'))
