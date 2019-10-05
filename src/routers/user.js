@@ -36,14 +36,50 @@ router.get('/register', async (req, res) => {
 
 // register authentication
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password, password2 } = req.body
   try {
-    await User.create({
-      name,
-      email,
-      password
-    })
-    res.redirect('/')
+
+    let errors = []
+    if (!email || !password || !password2) {
+      errors.push({ message: 'All fields are required' })
+    }
+
+    if (password !== password2) {
+      errors.push({ message: 'Passwords are not the same' })
+    }
+
+    if (errors.length > 0) {
+      res.render('register', {
+        errors,
+        name,
+        email,
+        password,
+        password2
+      })
+    } else {
+      const user = await User.findOne({ where: { email } })
+      // user already exists 
+      if (user) {
+        errors.push({ message: 'This Email is already registered' })
+        res.render('register', {
+          errors,
+          name,
+          email,
+          password,
+          password2
+        })
+      } else {
+        // Add new user if user not exists
+        const newUser =
+          await User.create({
+            name,
+            email,
+            password
+          })
+        await newUser.save()
+        res.redirect('/')
+      }
+    }
 
   } catch (e) {
     res.status(400).send(e)
