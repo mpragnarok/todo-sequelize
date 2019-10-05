@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const db = require('../../models')
+const User = db.User
 
 // show login page
 router.get('/login', async (req, res) => {
@@ -12,7 +14,9 @@ router.get('/login', async (req, res) => {
 
 // login authentication
 router.post('/login', async (req, res) => {
+
   try {
+
     res.render('login')
   } catch (e) {
     res.status(400).send(e)
@@ -20,7 +24,9 @@ router.post('/login', async (req, res) => {
 })
 // show register page
 router.get('/register', async (req, res) => {
+
   try {
+
     res.render('register')
   } catch (e) {
     res.status(500).send(e)
@@ -30,12 +36,20 @@ router.get('/register', async (req, res) => {
 
 // register authentication
 router.post('/register', async (req, res) => {
+  const { name, email, password } = req.body
   try {
-    res.render('register')
+    await User.create({
+      name,
+      email,
+      password
+    })
+    res.redirect('/')
+
   } catch (e) {
     res.status(400).send(e)
   }
 })
+
 // logout
 router.get('/logout', async (req, res) => {
   try {

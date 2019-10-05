@@ -5,13 +5,18 @@ const port = 3000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
-const session = require('express-session')
-const passport = require('passport')
 const flash = require('connect-flash')
 const hbs = exphbs.create({
   extname: 'hbs',
   defaultLayout: 'main'
 })
+
+
+
+// express-session and passport
+const session = require('express-session')
+const passport = require('passport')
+
 
 // setup handlebars engine and file extension
 app.engine(hbs.extname, hbs.engine, hbs.defaultLayout)
