@@ -38,11 +38,16 @@ router.get('/:id', authenticated, async (req, res) => {
 
 router.post('/', authenticated, async (req, res) => {
 
-  const todo = await Todo.create({ name: req.body.name, done: false, UserId: req.user.id })
+
   try {
+    if (req.body.name === '') {
+      req.flash('warning_msg', 'Please type something.')
+      return res.redirect('/')
+    }
     if (!req.body.name) {
       return res.redirect('/')
     }
+    const todo = await Todo.create({ name: req.body.name, done: false, UserId: req.user.id })
     await todo.save()
     res.status(201).redirect('/')
   } catch (e) {
@@ -71,7 +76,7 @@ router.put('/:id', authenticated, async (req, res) => {
     const todo = await Todo.findOne({ where: { Id: req.params.id, UserId: req.user.id } })
     updates.forEach(update => todo[update] = req.body[update])
     await todo.save()
-    res.redirect(`/todos/${req.params.id}`)
+    res.redirect('/')
 
     if (!todo) {
       return res.status(404).send()

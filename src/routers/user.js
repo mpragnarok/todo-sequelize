@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 const db = require('../../models')
 const User = db.User
+
 
 
 // show login page
@@ -74,12 +76,13 @@ router.post('/register', async (req, res) => {
           password2
         })
       } else {
+        const hash = await bcrypt.hash(password, 8)
         // Add new user if user not exists
         const newUser =
           await User.create({
             name,
             email,
-            password
+            password: hash
           })
         await newUser.save()
         res.redirect('/')

@@ -15,7 +15,12 @@ router.get('/', authenticated, async (req, res) => {
     if (!user) {
       return res.send('user not found')
     }
-    const todos = await Todo.findAll({ where: { UserId: req.user.id } })
+    const todos = await Todo.findAll({
+      where: { UserId: req.user.id },
+      order: [
+        ['updatedAt', 'DESC']
+      ]
+    })
     res.render('index', { todos })
 
 

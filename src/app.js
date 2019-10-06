@@ -1,7 +1,10 @@
 const express = require('express')
 const app = express()
 const port = 3000
-
+// check if not in production mode
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
@@ -58,6 +61,7 @@ app.use(express.static('public'))
 app.use('/todos', require('./routers/todo'))
 app.use('/', require('./routers/home'))
 app.use('/users', require('./routers/user'))
+app.use('/auth', require('./routers/auths'))
 
 // setup listening on Express server
 app.listen(port, () => {
