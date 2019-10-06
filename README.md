@@ -10,7 +10,7 @@ This is a basic Todo list with Sequelize demo which built up from [Alphacamp](ht
 
 ## Installing
 
-### Git bash
+### 1. Git bash
 
 #### git clone
 
@@ -19,7 +19,7 @@ This is a basic Todo list with Sequelize demo which built up from [Alphacamp](ht
 ```markdown
 git clone https://github.com/mpragnarok/todo-sequelize.git
 ```
-### MySQL Server
+### 2. MySQL Server
 
 Install [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) and connect to local server
 
@@ -40,7 +40,7 @@ select * from users;
 
 You can list the data in table with `select * from table-name` after you create the user and todo in the server.
 
-### Environment variable
+### 3. Environment variable
 
 Go to https://developers.facebook.com/ to create your own **App ID** and **App Secret** for restaurant list App
 
@@ -53,11 +53,54 @@ FACEBOOK_SECRET = <Your App Secret>
 CALLBACK_DOMAIN = http://localhost:3000
 ```
 
-### Command line
+### 4. Command line
 
 #### npm install
 
 Install all the packages in the project.
+
+### 5. configure sequelize
+
+#### config/config.json
+
+```js
+{
+  "development": {
+    "username": "root",
+    "password": <YOUR_MYSQL_WORKBENCH_PASSWORD>,
+    "database": "todo_sequelize",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+    <REMOVE operatorsAliases: false>
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+```
+
+#### run the migration
+
+In the powershell, run the migration with follow script:
+
+```powershell
+npx sequelize db:migrate
+```
+
+
+
+### 7. Command line
 
 #### npm run dev
 
@@ -100,6 +143,7 @@ Head to [http://localhost:3000](http://localhost:3000) to experience the Todo Se
 11. passport-facebook: 3.0.0
 12. passport-local: 1.0.0
 13. sequelize: 5.19.2
+14. sequelize-cli: 5.5.1
 
 
 #### devDependency
