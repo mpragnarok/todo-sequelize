@@ -71,7 +71,6 @@ Install all the packages in the project.
     "database": "todo_sequelize",
     "host": "127.0.0.1",
     "dialect": "mysql"
-    <REMOVE operatorsAliases: false>
   },
   "test": {
     "username": "root",
